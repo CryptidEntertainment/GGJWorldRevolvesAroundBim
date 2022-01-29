@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldPizza : MonoBehaviour {
+    public Rigidbody bim;
     public float FlipDuration = 0.3f;
 
     private float flipTime = 0;
@@ -17,6 +18,7 @@ public class WorldPizza : MonoBehaviour {
         if (!this.isFlipping && Input.GetKeyDown(KeyCode.Space)) {
             this.flipTime = 0;
             this.isFlipping = true;
+            if (this.bim) this.bim.isKinematic = true;
         }
 
         if (this.isFlipping) {
@@ -26,6 +28,7 @@ public class WorldPizza : MonoBehaviour {
                 this.isFlipping = false;
                 Transform transform = this.gameObject.transform;
                 transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Round(transform.rotation.eulerAngles.z / 180f) * 180f);
+                if (this.bim) this.bim.isKinematic = false;
             }
         }
     }
