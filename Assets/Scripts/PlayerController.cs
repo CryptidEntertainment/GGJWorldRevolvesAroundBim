@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		gameDriver = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameDriver> ();
-		preJumpAnimLength = preJumpAnimation.length;
+		if (preJumpAnimation) preJumpAnimLength = preJumpAnimation.length;
         //phys = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -269,7 +269,6 @@ public class PlayerController : MonoBehaviour
 		state = PlayerState.Dying;
 	}
 
-
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.tag == "DeathBox") {
 			gameDriver.ReloadLevel ();
@@ -292,6 +291,7 @@ public class PlayerController : MonoBehaviour
 
 
     private void OnCollisionEnter2D(Collision2D collision)
+
     {
         if(collision.gameObject.layer==6)
         {
