@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		gameDriver = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameDriver> ();
-		preJumpAnimLength = preJumpAnimation.length;
+		if (preJumpAnimation) preJumpAnimLength = preJumpAnimation.length;
         //phys = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
