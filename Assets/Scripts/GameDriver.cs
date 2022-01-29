@@ -24,6 +24,7 @@ public class GameDriver : MonoBehaviour {
 		} else {
 			GameObject.Destroy (this.gameObject);
 		}
+		gameObject.tag = "GameController";
 		if (currentLevel > 0) {
 			Debug.Log ("Yes");
 			Camera.main.transform.position = cameraPos;
@@ -34,6 +35,7 @@ public class GameDriver : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameObject.DontDestroyOnLoad (this.gameObject);
+		gameObject.tag = "GameController";
 	}
 	
 	// Update is called once per frame
