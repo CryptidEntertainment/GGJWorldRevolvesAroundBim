@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5087358078133991852}
   - component: {fileID: 5087358078133991853}
   - component: {fileID: 5087358078133991855}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -101,16 +101,17 @@ MonoBehaviour:
   startPoint: {fileID: 0}
   jumpPower: 15
   moveSpeed: 35
-  wifiSpeed: 15
   accelTime: 0.5
   preJump: 0
   canJump: 0
+  canFlip: 0
+  landing: 0
   jumpCD: 0
   phys: {fileID: 5087358078133991855}
   canMove: 1
-  enterDishTime: 0.5
-  transmissionTime: 3
   deathTime: 1
+  deathTimer: 0
+  preJumpAnimation: {fileID: 7400000, guid: dabc1e86945fd0944a454eaf966832c8, type: 2}
   anim: {fileID: 5087358078133991852}
   state: 0
 --- !u!95 &5087358078133991852

@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 	[Space(6)]
 
 	[Header("Movement")]
-	public float jumpPower = 100;
+	public float jumpPower = 1;
     public float moveSpeed = 10;
     public float accelTime = 0.1f;
     public bool preJump = false;
@@ -109,6 +109,10 @@ public class PlayerController : MonoBehaviour
     {
 		if (state == PlayerState.Controllable)
         {
+            if (Input.GetAxis("Flip") != 0)
+            {
+				anim.SetInteger("animState", 5);
+            }
             if(phys.velocity.x>0)GetComponent<SpriteRenderer>().flipX = false;
             if (phys.velocity.x < 0) GetComponent<SpriteRenderer>().flipX = true;
             if (jumpCD > 0) jumpCD--;
@@ -173,37 +177,46 @@ public class PlayerController : MonoBehaviour
 					if (preJump == false)
 					{
 						preJump = true;
-						//Debug.Log("Jump Pressed, jumping prep");
-						anim.SetInteger("animState", 3);//ascend
-						//Debug.Log("Anim State: " + anim.GetInteger("animState"));
+						preJumpAnimStart = Time.time+Time.deltaTime;
+						jumpCD = 30;
+						Debug.Log("Jump Pressed, jumping prep");
+						anim.SetInteger("animState", 2);//jump
+						Debug.Log("Anim State: " + anim.GetInteger("animState"));
+						Debug.Log(preJumpAnimStart);
 						//Do the prejump animation
 					}
 					else
                     {
-						//phys.AddForce(Vector2.up * jumpCD); //This is how to do the jump force, need to find a place to put it
+						//phys.AddForce(Vector2.up * jumpCD); //This is how to do the jump force, need to find a place to put it - or an alternate way??
 					}
 				}
 			}
 			if (preJump == true)
 			{
 				//need to mess with prejump stuff
-				canJump = false;
-				jumpCD = 30;
-				phys.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-				anim.SetInteger("animState", 3);//ascend
-												//Debug.Log("Should be 3: " + anim.GetInteger("animState"));
-												//Do the jump animation
+				if (Time.time >= preJumpAnimStart + preJumpAnimLength)
+				{
+					preJump = false;
+					canJump = false;
+					anim.SetInteger("animState", 3);//in-air
+					phys.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+				}
+                else
+                {
+					Debug.Log("Time: " +Time.time + " | preJumpAnimStart: " + preJumpAnimStart + " | preJumpAnimLength: " + preJumpAnimLength);
+                }
+
 			}
-			else if(Input.GetAxis("Vertical")<=0)
+			else if (Input.GetAxis("Vertical") <= 0)
 			{
 				jumpCD = 0;
-		}
+			}
 		}
 		if(phys.velocity.y<0)
 		{
 			phys.AddForce(new Vector2(0, -18f * phys.mass));
 			//Debug.Log("Falling, trigger falling anim");
-			anim.SetInteger("animState", 4);//descend
+			//anim.SetInteger("animState", 4);//no change in this case, stays in the in-air animation
 			//Do the falling animation
 		}
 	}
@@ -271,7 +284,7 @@ public class PlayerController : MonoBehaviour
 				SetInSignal (false);
 			}
 		} else if(other.gameObject.tag == "EmiterSwitch"){
-			if(!gameObject.GetComponent<Collider2D> ().IsTouchingLayers (11)){
+			if(!gameObject.GetComponent<Collider2D> ().IsTouchingLayers (11)){//bit check for unity physics layers 0, 1, 3
 				LeaveSwitch();
 			}
 		}*/
@@ -280,7 +293,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer==9)
+        if(collision.gameObject.layer==6)
         {
             bool isAbove = false;
             ContactPoint2D[] points = collision.contacts;
@@ -289,12 +302,9 @@ public class PlayerController : MonoBehaviour
                 if(point.point.y<(transform.position.y-GetComponent<SpriteRenderer>().bounds.extents.y*0.5f))
                 {
                     //Debug.Log("The point: " + point.point + " Is below: " + (transform.position.y - GetComponent<SpriteRenderer>().bounds.extents.y * 0.9f));
-                    isAbove = true;
+					isAbove = true;
                     canJump = true;
-                    if(Input.GetAxis("Horizontal")!=0)
-                    {
-                        //anim.SetInteger("animState", 1);//walk
-                    }
+					anim.SetInteger("animState", 4);//land
                     //phys.velocity = Vector2.zero;
                     //anim.SetInteger("animState", 0);
                     //jumpCD = 0;
@@ -309,10 +319,11 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         //Debug.Log("Collision Exit");
-        if (!GetComponent<CapsuleCollider2D>().IsTouchingLayers(512))
+        if (!GetComponent<CapsuleCollider2D>().IsTouchingLayers(64))//bit check specifically for unity physics layer 6
         {
             //Debug.Log("Not touching ground, can't jump.");
             canJump = false;
+			anim.SetInteger("animState", 3);//in-air
             //anim.SetInteger("animState", 4);//descend
         }
     }
