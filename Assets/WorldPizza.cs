@@ -14,7 +14,7 @@ public class WorldPizza : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (!this.isFlipping && Input.GetKeyDown(KeyCode.Space)) {
             this.flipTime = 0;
             this.isFlipping = true;
         }
@@ -25,7 +25,7 @@ public class WorldPizza : MonoBehaviour {
             if (this.flipTime == 1f) {
                 this.isFlipping = false;
                 Transform transform = this.gameObject.transform;
-                transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Round(transform.rotation.eulerAngles.z / 180f) * 180f,);
+                transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Round(transform.rotation.eulerAngles.z / 180f) * 180f);
             }
         }
     }
