@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldPizza : MonoBehaviour {
-    public float FlipDuration = 0.5f;
+    public float FlipDuration = 0.3f;
 
     private float flipTime = 0;
     private bool isFlipping = false;
