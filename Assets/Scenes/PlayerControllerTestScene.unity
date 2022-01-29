@@ -478,30 +478,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5087358078133991848, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
-      propertyPath: jumpPower
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5087358078133991848, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
-      propertyPath: moveSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5087358078133991848, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
-      propertyPath: flipAnimation
-      value: 
-      objectReference: {fileID: 7400000, guid: 7b1a0d32942a7304c966f13af82524fa, type: 2}
-    - target: {fileID: 5087358078133991850, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
-      propertyPath: m_Size.x
-      value: 0.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 5087358078133991850, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
-      propertyPath: m_Size.y
-      value: 0.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 5087358078133991850, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5087358078133991851, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -545,10 +521,6 @@ PrefabInstance:
     - target: {fileID: 5087358078133991851, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5087358078133991853, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5087358078133991854, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
       propertyPath: m_Name

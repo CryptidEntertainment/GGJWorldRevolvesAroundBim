@@ -80,7 +80,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,12 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPoint: {fileID: 0}
+  doubleJumpOnFlip: 0
   jumpPower: 15
-  moveSpeed: 35
+  moveSpeed: 20
   accelTime: 0.5
   preJump: 0
   canJump: 0
-  canFlip: 0
   landing: 0
   jumpCD: 0
   phys: {fileID: 5087358078133991855}
@@ -112,6 +112,7 @@ MonoBehaviour:
   deathTime: 1
   deathTimer: 0
   preJumpAnimation: {fileID: 7400000, guid: dabc1e86945fd0944a454eaf966832c8, type: 2}
+  flipAnimation: {fileID: 7400000, guid: 7b1a0d32942a7304c966f13af82524fa, type: 2}
   anim: {fileID: 5087358078133991852}
   state: 0
 --- !u!95 &5087358078133991852

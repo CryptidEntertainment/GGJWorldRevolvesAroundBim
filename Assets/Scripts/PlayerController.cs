@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 	[Space(6)]
 
 	[Header("Movement")]
+	public bool doubleJumpOnFlip = false;
 	public float jumpPower = 1;
     public float moveSpeed = 10;
     public float accelTime = 0.1f;
@@ -109,21 +110,6 @@ public class PlayerController : MonoBehaviour
     {
 		if (state == PlayerState.Controllable)
         {
-			Debug.Log("Hit Flip");
-			if (Input.GetAxis("Flip") != 0 && gameDriver.flip == true)
-            {
-				Debug.Log("Should Flip");
-				gameDriver.flip = false;
-				anim.SetInteger("animState", 5);
-				phys.gravityScale = 0;
-				GetComponent<Collider2D>().enabled = false;
-			}
-            if(phys.velocity.x>0)GetComponent<SpriteRenderer>().flipX = false;
-            if (phys.velocity.x < 0) GetComponent<SpriteRenderer>().flipX = true;
-            if (jumpCD > 0) jumpCD--;
-			
-
-
 			if (phys.velocity.x < 0)
 			{
 				if (Input.GetAxis("Horizontal") < 0)
@@ -208,7 +194,7 @@ public class PlayerController : MonoBehaviour
 				}
                 else
                 {
-					Debug.Log("Time: " +Time.time + " | preJumpAnimStart: " + preJumpAnimStart + " | preJumpAnimLength: " + preJumpAnimLength);
+					//Debug.Log("Time: " +Time.time + " | preJumpAnimStart: " + preJumpAnimStart + " | preJumpAnimLength: " + preJumpAnimLength);
                 }
 
 			}
@@ -224,15 +210,33 @@ public class PlayerController : MonoBehaviour
 			//anim.SetInteger("animState", 4);//no change in this case, stays in the in-air animation
 			//Do the falling animation
 		}
-
-		if(state == PlayerState.Flipping)
+		if (Input.GetAxis("Flip") != 0 && gameDriver.flip == true)
+		{
+			
+			Debug.Log("Should Flip");
+			gameDriver.flip = false;
+			flipAnimStart = Time.time + Time.deltaTime;
+			anim.SetInteger("animState", 5);
+			phys.gravityScale = 0;
+			state = PlayerState.Flipping;
+			
+			GetComponent<Collider2D>().enabled = false;
+		}
+		if (phys.velocity.x > 0) GetComponent<SpriteRenderer>().flipX = false;
+		if (phys.velocity.x < 0) GetComponent<SpriteRenderer>().flipX = true;
+		if (jumpCD > 0) jumpCD--;
+		if (state == PlayerState.Flipping)
         {
+			phys.velocity = Vector2.zero;
+			anim.SetInteger("animState", 5);
+			//Debug.Log("Currently flipping. | " + anim.GetInteger("animState"));
 			if (Time.time >= flipAnimStart + flipAnimLength)
 			{
 				state = PlayerState.Controllable;
 				phys.gravityScale = 1.0f;
 				GetComponent<Collider2D>().enabled = true;
 			}
+			if(doubleJumpOnFlip)canJump = true;
 		}
 	}
 
