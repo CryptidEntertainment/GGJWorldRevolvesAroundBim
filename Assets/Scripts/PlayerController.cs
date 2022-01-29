@@ -21,21 +21,24 @@ public class PlayerController : MonoBehaviour
 	[Header("Movement")]
 	public float jumpPower = 100;
     public float moveSpeed = 10;
-	public float wifiSpeed = 10;
     public float accelTime = 0.1f;
     public bool preJump = false;
     public bool canJump = false;
+	public bool canFlip = false;
+	public bool landing = false;
     public float jumpCD = 0f;
 	public Rigidbody2D phys;
 	public bool canMove = true;
 	[Space(8)]
 
 	[Header("Animation")]
-	public float enterDishTime = 0.5f;
-	public float transmissionTime = 1.0f;
 	public float deathTime = 1.0f;
+	public float deathTimer = 0.0f;
+	public AnimationClip preJumpAnimation = null;
+	private float preJumpAnimLength = 0.0f; //set this to the linked preJumpAnimation's duration when the script starts
+	private float preJumpAnimStart = 0.0f; //will mark the start point for the timer to go off after the duration of the jump animation time
 	public Animator anim;
-
+	
 	//Gamedriver and State
 	private GameDriver gameDriver;
 	public PlayerState state = PlayerState.Controllable;
@@ -47,14 +50,14 @@ public class PlayerController : MonoBehaviour
 	private bool selectIsDown = false;
 
 	//animation
-	private Vector3 transitionStartPos;
+	/*private Vector3 transitionStartPos;
 	private float transTimer;
 	private float lerpRate = 1f;
 	private Vector3 transitionEndPos;
 	private bool doneMoving = true;
 	private float transitionTravelDis;
 	private float scaleFactor = 1f;
-	private float deathTimer = 0f;
+	private float deathTimer = 0f;*/
 
 	private int ignoreExit = 0;
     
@@ -70,10 +73,12 @@ public class PlayerController : MonoBehaviour
 		}
 
 		gameDriver = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameDriver> ();
+		preJumpAnimLength = preJumpAnimation.length;
         //phys = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
 
+	// Update is called once per screen frame.
 	void Update(){
 		switch (state) {
 		case PlayerState.Controllable:
@@ -87,63 +92,6 @@ public class PlayerController : MonoBehaviour
 			}
 			break;
 
-		/*case PlayerState.Transition1:
-			lerpRate = Mathf.Min(1f, 1f - transTimer / enterDishTime);
-			this.transform.position = new Vector3 (Mathf.Lerp (transitionStartPos.x, transitionEndPos.x, lerpRate), Mathf.Lerp (transitionStartPos.y, transitionEndPos.y, lerpRate), 0);
-			//scaleFactor = Mathf.Max (0.25f, Vector3.Distance (this.transform.position, transitionEndPos) / transitionStartDistance);
-			//this.transform.localScale = new Vector3 (scaleFactor, scaleFactor, 1f);
-			if (this.transform.position == transitionEndPos) {
-				transitionEndPos = dish.transPoint.position;
-				transitionStartPos = transform.position;
-				//transitionStartDistance = Vector3.Distance (this.transform.position, transitionEndPos);
-				//transitionTravelDis = transitionStartDistance / enterDishTime;
-				transTimer = transmissionTime;
-				state = PlayerState.Transition2;
-				//animator.Play ();
-			} else {
-				transTimer -= Time.deltaTime;
-			}
-			break;
-
-		case PlayerState.Transition2:
-			lerpRate = Mathf.Min(1f, 1f - transTimer / transmissionTime);
-			this.transform.position = new Vector3 (Mathf.Lerp (transitionStartPos.x, transitionEndPos.x, lerpRate), Mathf.Lerp (transitionStartPos.y, transitionEndPos.y, lerpRate), 0);
-			//this.transform.position = Vector2.MoveTowards ((Vector2)this.transform.position, (Vector2)transitionEndPos , transitionTravelDis * Time.deltaTime);
-			//this.transform.position = new Vector3 (transform.position.x, transform.position.y, 1f);
-			if ((Vector2)this.transform.position == (Vector2)transitionEndPos) {
-				transitionEndPos = dish.outPoint.position;
-				transitionStartPos = transform.position;
-				//transitionStartDistance = Vector3.Distance (this.transform.position, transitionEndPos);
-				//transitionTravelDis = transitionStartDistance / transmissionTime ;
-				//Camera.main.GetComponent<FollowCam> ().enabled = false;
-				transTimer = enterDishTime;
-				state = PlayerState.Transition3;
-			}
-			else {
-				transTimer -= Time.deltaTime;
-			}
-			break;
-
-
-		case PlayerState.Transition3:
-			lerpRate = Mathf.Min (1, 1 - transTimer / enterDishTime);
-			this.transform.position = new Vector3 (Mathf.Lerp (transitionStartPos.x, transitionEndPos.x, lerpRate), Mathf.Lerp (transitionStartPos.y, transitionEndPos.y, lerpRate), 0);
-			//this.transform.position = Vector2.MoveTowards ((Vector2)this.transform.position, (Vector2)transitionEndPos, transitionTravelDis * Time.deltaTime);
-			//scaleFactor = 0.4f; //Mathf.Min (0.4f, (1 - Vector3.Distance (this.transform.position, transitionEndPos) / transitionStartDistance)*0.4f);
-			//this.transform.localScale = new Vector3 (scaleFactor, scaleFactor, 1);
-			if (this.transform.position == transitionEndPos) {
-				//phys.gravityScale = 1;
-				//state = PlayerState.Controllable;
-				gameDriver.GoToNextLevel ();
-				//transform.position = GameObject.FindGameObjectWithTag ("StartPos").transform.position;
-				//Camera.main.transform.parent = null;
-				//Camera.main.GetComponent<FollowCam> ().enabled = true;
-			}
-			else{
-				transTimer -= Time.deltaTime;
-			}
-			break;*/
-
 		case PlayerState.Dying:
 			if (deathTimer > 0) {
 				gameObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.red, Color.white, deathTimer%0.5f);
@@ -156,7 +104,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-    // Update is called once per frame
+    // FixedUpdate is called once per physics(??) frame; much more well regulated intervals than Update
     void FixedUpdate()
     {
 		if (state == PlayerState.Controllable)
@@ -164,19 +112,7 @@ public class PlayerController : MonoBehaviour
             if(phys.velocity.x>0)GetComponent<SpriteRenderer>().flipX = false;
             if (phys.velocity.x < 0) GetComponent<SpriteRenderer>().flipX = true;
             if (jumpCD > 0) jumpCD--;
-			/*if (inWifiRange)
-			{
-				phys.velocity = new Vector2(Mathf.Lerp(phys.velocity.x, Input.GetAxis("Horizontal")*wifiSpeed, accelTime),
-					Mathf.Lerp(phys.velocity.y, Input.GetAxis("Vertical")*wifiSpeed, accelTime));
-				if (phys.velocity.y >= 0)
-				{
-					anim.SetInteger("animState", 3);//ascend
-				}
-				else if (phys.velocity.y < 0)
-				{
-					anim.SetInteger("animState", 4);//descend
-				}
-			}*/
+			
 
 
 			if (phys.velocity.x < 0)
@@ -185,13 +121,11 @@ public class PlayerController : MonoBehaviour
 				{
 					phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed, 0), ForceMode2D.Force);
 					if (canJump) anim.SetInteger("animState", 1);//walk
-					else anim.SetInteger("animState", 3);//jump
 				}
 				else if (Input.GetAxis("Horizontal") > 0)
 				{
 					phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed + phys.velocity.x*phys.mass*-5f, 0), ForceMode2D.Force);
 					if (canJump) anim.SetInteger("animState", 1);//walk
-					else anim.SetInteger("animState", 3);//jump
 				}
 				else if (Input.GetAxis("Horizontal")==0)
 				{
@@ -205,13 +139,11 @@ public class PlayerController : MonoBehaviour
 				{
 					phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed + phys.velocity.x * phys.mass * -5f, 0), ForceMode2D.Force);
 					if (canJump) anim.SetInteger("animState", 1);//walk
-					else anim.SetInteger("animState", 3);//jump
 				}
 				else if (Input.GetAxis("Horizontal") > 0)
 				{
 					phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed, 0), ForceMode2D.Force);
 					if (canJump) anim.SetInteger("animState", 1);//walk
-					else anim.SetInteger("animState", 3);//ascend
 				}
 				else if (Input.GetAxis("Horizontal") == 0)
 				{
@@ -223,32 +155,19 @@ public class PlayerController : MonoBehaviour
 			{
 				phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed*20, 0), ForceMode2D.Force);
 				if (canJump) anim.SetInteger("animState", 1);//walk
-				else anim.SetInteger("animState", 3);//ascend
 			}
 			else if (phys.velocity.x==0 && Input.GetAxis("Horizontal")==0)
 			{
-				if (canJump) anim.SetInteger("animState", 0);
-				else anim.SetInteger("animState", 3);//ascend
+				if (canJump) anim.SetInteger("animState", 0);//idle
 			}
 
 			phys.velocity = Vector3.ClampMagnitude(phys.velocity, moveSpeed);
 			//phys.velocity = new Vector2(Mathf.Lerp(phys.velocity.x, Input.GetAxis("Horizontal"), accelTime) * moveSpeed, phys.velocity.y);
-			if (preJump == true)
-			{
-				preJump = false;
-				canJump = false;
-				jumpCD = 30;
-				phys.AddForce(Vector2.up * jumpPower,ForceMode2D.Impulse);
-				anim.SetInteger("animState", 3);//ascend
-				//Debug.Log("Should be 3: " + anim.GetInteger("animState"));
-				//Do the jump animation
-			}
+			
+
+			//Now for the jumping part of the code!
 			if (Input.GetAxis("Vertical") > 0)
 			{
-				if (jumpCD > 0)
-				{
-					phys.AddForce(Vector2.up * jumpCD);
-				}
 				if (canJump && jumpCD==0)
 				{
 					if (preJump == false)
@@ -259,7 +178,21 @@ public class PlayerController : MonoBehaviour
 						//Debug.Log("Anim State: " + anim.GetInteger("animState"));
 						//Do the prejump animation
 					}
+					else
+                    {
+						//phys.AddForce(Vector2.up * jumpCD); //This is how to do the jump force, need to find a place to put it
+					}
 				}
+			}
+			if (preJump == true)
+			{
+				//need to mess with prejump stuff
+				canJump = false;
+				jumpCD = 30;
+				phys.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+				anim.SetInteger("animState", 3);//ascend
+												//Debug.Log("Should be 3: " + anim.GetInteger("animState"));
+												//Do the jump animation
 			}
 			else if(Input.GetAxis("Vertical")<=0)
 			{
