@@ -256,29 +256,7 @@ public class PlayerController : MonoBehaviour
 		state = PlayerState.Dying;
 	}
 
-
-	void OnTriggerEnter2D(Collider2D other){
-		if (other.gameObject.tag == "DeathBox") {
-			gameDriver.ReloadLevel ();
-		}
-	}
-
-	void OnTriggerExit2D(Collider2D other){
-		/*if (other.gameObject.tag == "Signal") {
-			Debug.Log ("Exited Signal");
-			ignoreExit--;
-			if (ignoreExit <= 0) {
-				SetInSignal (false);
-			}
-		} else if(other.gameObject.tag == "EmiterSwitch"){
-			if(!gameObject.GetComponent<Collider2D> ().IsTouchingLayers (11)){
-				LeaveSwitch();
-			}
-		}*/
-	}
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
+	private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.layer==9)
         {

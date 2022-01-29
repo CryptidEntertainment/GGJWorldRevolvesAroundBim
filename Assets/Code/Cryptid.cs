@@ -13,21 +13,11 @@ public class Cryptid : MonoBehaviour {
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collider) {
-        Debug.Log("Enter");
+    void OnTriggerEnter2D(Collider2D collider) {
         if (this.helpText) this.helpText.SetActive(true);
     }
 
-    private void OnTriggerExit2D(Collider2D collider) {
-        if (this.helpText) this.helpText.SetActive(false);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("Enter");
-        if (this.helpText) this.helpText.SetActive(true);
-    }
-
-    private void OnCollisionExit2D(Collision2D collision) {
+    void OnTriggerExit2D(Collider2D collider) {
         if (this.helpText) this.helpText.SetActive(false);
     }
 }
