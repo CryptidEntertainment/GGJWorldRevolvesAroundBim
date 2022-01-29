@@ -18,13 +18,23 @@ public class GameDriver : MonoBehaviour {
 	public Vector3 cameraPos = Vector3.zero;
 	public float cameraSize = 0f;
 
+
+	//info whether the player can flip the stage, used by Bim and any flip crystals.
+	private bool canFlip; // private field for the flip
+	public bool flip   // property
+	{
+		get { return canFlip; }   // get method
+		set { canFlip = value; }  // set method
+	}
+
+
 	void Awake(){
 		if (!_gameDriver) {
 			_gameDriver = this;
 		} else {
 			GameObject.Destroy (this.gameObject);
 		}
-		gameObject.tag = "GameController";
+		flip = true;
 		if (currentLevel > 0) {
 			Debug.Log ("Yes");
 			Camera.main.transform.position = cameraPos;
@@ -35,7 +45,6 @@ public class GameDriver : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameObject.DontDestroyOnLoad (this.gameObject);
-		gameObject.tag = "GameController";
 	}
 	
 	// Update is called once per frame

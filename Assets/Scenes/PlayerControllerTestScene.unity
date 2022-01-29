@@ -469,6 +469,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5087358078133991848, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
+      propertyPath: flipAnimation
+      value: 
+      objectReference: {fileID: 7400000, guid: 7b1a0d32942a7304c966f13af82524fa, type: 2}
     - target: {fileID: 5087358078133991850, guid: ba0d2ac855cca494facc956f68efc1b4, type: 3}
       propertyPath: m_Size.x
       value: 0.64

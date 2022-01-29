@@ -4,11 +4,7 @@ using UnityEngine;
 
 public enum PlayerState{
 	Controllable,
-	Transition1,
-	Transition2,
-	Transition3,
-	Transition4,
-	Transition5,
+	Flipping,
 	Dying
 }
 
@@ -24,7 +20,6 @@ public class PlayerController : MonoBehaviour
     public float accelTime = 0.1f;
     public bool preJump = false;
     public bool canJump = false;
-	public bool canFlip = false;
 	public bool landing = false;
     public float jumpCD = 0f;
 	public Rigidbody2D phys;
@@ -37,6 +32,9 @@ public class PlayerController : MonoBehaviour
 	public AnimationClip preJumpAnimation = null;
 	private float preJumpAnimLength = 0.0f; //set this to the linked preJumpAnimation's duration when the script starts
 	private float preJumpAnimStart = 0.0f; //will mark the start point for the timer to go off after the duration of the jump animation time
+	public AnimationClip flipAnimation = null;
+	private float flipAnimLength = 0.0f;
+	private float flipAnimStart = 0.0f;
 	public Animator anim;
 	
 	//Gamedriver and State
@@ -73,7 +71,9 @@ public class PlayerController : MonoBehaviour
 		}
 
 		gameDriver = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameDriver> ();
+		Debug.Log(gameDriver);
 		if (preJumpAnimation) preJumpAnimLength = preJumpAnimation.length;
+		if (flipAnimation) flipAnimLength = flipAnimation.length;
         //phys = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -109,10 +109,15 @@ public class PlayerController : MonoBehaviour
     {
 		if (state == PlayerState.Controllable)
         {
-            if (Input.GetAxis("Flip") != 0)
+			Debug.Log("Hit Flip");
+			if (Input.GetAxis("Flip") != 0 && gameDriver.flip == true)
             {
+				Debug.Log("Should Flip");
+				gameDriver.flip = false;
 				anim.SetInteger("animState", 5);
-            }
+				phys.gravityScale = 0;
+				GetComponent<Collider2D>().enabled = false;
+			}
             if(phys.velocity.x>0)GetComponent<SpriteRenderer>().flipX = false;
             if (phys.velocity.x < 0) GetComponent<SpriteRenderer>().flipX = true;
             if (jumpCD > 0) jumpCD--;
@@ -179,10 +184,10 @@ public class PlayerController : MonoBehaviour
 						preJump = true;
 						preJumpAnimStart = Time.time+Time.deltaTime;
 						jumpCD = 30;
-						Debug.Log("Jump Pressed, jumping prep");
+						//Debug.Log("Jump Pressed, jumping prep");
 						anim.SetInteger("animState", 2);//jump
-						Debug.Log("Anim State: " + anim.GetInteger("animState"));
-						Debug.Log(preJumpAnimStart);
+						//Debug.Log("Anim State: " + anim.GetInteger("animState"));
+						//Debug.Log(preJumpAnimStart);
 						//Do the prejump animation
 					}
 					else
@@ -218,6 +223,16 @@ public class PlayerController : MonoBehaviour
 			//Debug.Log("Falling, trigger falling anim");
 			//anim.SetInteger("animState", 4);//no change in this case, stays in the in-air animation
 			//Do the falling animation
+		}
+
+		if(state == PlayerState.Flipping)
+        {
+			if (Time.time >= flipAnimStart + flipAnimLength)
+			{
+				state = PlayerState.Controllable;
+				phys.gravityScale = 1.0f;
+				GetComponent<Collider2D>().enabled = true;
+			}
 		}
 	}
 
