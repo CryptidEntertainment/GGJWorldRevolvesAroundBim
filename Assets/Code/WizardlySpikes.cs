@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WizardlySpikes : MonoBehaviour {
     // Start is called before the first frame update
@@ -12,6 +13,6 @@ public class WizardlySpikes : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        Debug.Log("on noes");
+        if (FindObjectOfType<PlayerController>()) FindObjectOfType<PlayerController>().Die();
     }
 }
