@@ -17,6 +17,7 @@ Complete levels by pressing the Tab key and making the world spin around you.
  - Programming: Rayne Taylor & Mike Peng
  - Level Design, Music, Narrative, and Bardic Magic: Ryan Canuel
  - SFX: Maddie Shallop
+ - Font: [Quinque Five by GGBotNet](https://www.fontspace.com/quinque-five-font-f65138)
 
 ## Build
 
