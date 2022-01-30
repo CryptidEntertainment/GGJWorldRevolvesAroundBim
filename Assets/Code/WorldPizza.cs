@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldPizza : MonoBehaviour {
     public Rigidbody bim;
     public float FlipDuration = 0.3f;
+
+    public GameObject fgRed;
+    public GameObject fgBlue;
 
     private float flipTime = 0;
     private bool isFlipping = false;
@@ -19,6 +20,8 @@ public class WorldPizza : MonoBehaviour {
             this.flipTime = 0;
             this.isFlipping = true;
             if (this.bim) this.bim.isKinematic = true;
+            this.fgRed.SetActive(!this.fgRed.activeInHierarchy);
+            this.fgBlue.SetActive(!this.fgBlue.activeInHierarchy);
         }
 
         if (this.isFlipping) {

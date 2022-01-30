@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour {
     public string DestinationScene;
@@ -16,8 +15,9 @@ public class Door : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collider) {
         this.transform.Find("Frame").gameObject.SetActive(true);
+
         if (this.DestinationScene != "") {
-            SceneManager.LoadScene(this.DestinationScene, LoadSceneMode.Single);
+            StartCoroutine(FindObjectOfType<SceneFader>().FadeAndLoadScene(SceneFader.FadeDirection.In, this.DestinationScene));
         }
     }
 }
