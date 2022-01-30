@@ -14,10 +14,17 @@ public class Cryptid : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if (this.helpText) this.helpText.SetActive(true);
+        if (collider.tag == "Player")
+        {
+            if (this.helpText) this.helpText.SetActive(true);
+        }
     }
 
     void OnTriggerExit2D(Collider2D collider) {
-        if (this.helpText) this.helpText.SetActive(false);
+        if (collider.tag == "Player")
+        {
+
+            if (this.helpText) this.helpText.SetActive(false);
+        }
     }
 }
