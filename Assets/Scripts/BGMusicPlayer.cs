@@ -13,4 +13,10 @@ public class BGMusicPlayer : MonoBehaviour
         loopBG.PlayDelayed(introBG.clip.length*0.995f); //play the looping audio, with the tiniest bit of overlap to try and make up for Unity not actually preloading the audio so it starts exactly when it's supposed to.
     }
 
+    public void stopMusic()
+    {
+        introBG.Stop();
+        loopBG.Stop();
+    }
+
 }
