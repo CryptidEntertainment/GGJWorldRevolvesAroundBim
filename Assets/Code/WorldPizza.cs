@@ -15,6 +15,7 @@ public class WorldPizza : MonoBehaviour {
     private bool isFlipping = false;
     private GameDriver gameDriver;
     public bool startWithFlip = true;
+    public bool unlimitedFlips = false;
     void Start() {
         gameDriver = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameDriver>();
         gameDriver.connectWorldFlipper(this.gameObject);//attempt to give this object over to the driver to actually use it.
@@ -23,7 +24,7 @@ public class WorldPizza : MonoBehaviour {
     //is called by the gamedriver to let us know that it's time for the room to flip. Immediately go back and tell the driver that we can no longer flip so we can't hold the button to make it go forever. That is a thing otherwise.
     public void flipRoom()
     {
-        gameDriver.flip = false;
+        if(!unlimitedFlips)gameDriver.flip = false;
         this.flipTime = 0;
         this.isFlipping = true;
         if (this.bim) this.bim.isKinematic = true;

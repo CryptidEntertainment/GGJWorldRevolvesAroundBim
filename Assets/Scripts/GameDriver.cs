@@ -19,7 +19,6 @@ public class GameDriver : MonoBehaviour {
 	public Vector3 cameraPos = Vector3.zero;
 	public float cameraSize = 0f;
 
-
 	//info whether the player can flip the stage, used by Bim and any flip crystals.
 	public bool canFlip; // private field for the flip
 	public bool flip   // property
@@ -33,7 +32,7 @@ public class GameDriver : MonoBehaviour {
 		if (canFlip)
 		{
 			worldFlipper.flipRoom();
-			canFlip = false;
+			if(!worldFlipper.unlimitedFlips)canFlip = false;
 		}
 	}
 

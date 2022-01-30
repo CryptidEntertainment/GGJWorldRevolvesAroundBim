@@ -235,7 +235,7 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetAxis("Flip") != 0 && gameDriver.flip == true)
 		{
 			
-			Debug.Log("Should Flip");
+			//Debug.Log("Should Flip");
 			flipAnimStart = Time.time + Time.deltaTime;
 			anim.SetInteger("animState", 5);
 			plAud.playBimFlip();
