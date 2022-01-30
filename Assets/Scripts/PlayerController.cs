@@ -214,7 +214,6 @@ public class PlayerController : MonoBehaviour
 		{
 			
 			Debug.Log("Should Flip");
-			gameDriver.flip = false;
 			flipAnimStart = Time.time + Time.deltaTime;
 			anim.SetInteger("animState", 5);
 			phys.gravityScale = 0;
@@ -232,6 +231,7 @@ public class PlayerController : MonoBehaviour
 			//Debug.Log("Currently flipping. | " + anim.GetInteger("animState"));
 			if (Time.time >= flipAnimStart + flipAnimLength)
 			{
+				gameDriver.flip = false;
 				state = PlayerState.Controllable;
 				phys.gravityScale = 1.0f;
 				GetComponent<Collider2D>().enabled = true;
