@@ -7,6 +7,12 @@ public class Cryptid : MonoBehaviour {
     private float textTime = 0;
     private float textStayDuration = 3;
 
+    private void Awake() {
+        foreach (GameObject text in this.texts) {
+            if (text) text.SetActive(false);
+        }
+    }
+
     private void Update() {
         if (this.helpText && this.helpText.activeInHierarchy) {
             this.textTime = Mathf.Min(this.textTime + Time.deltaTime / textStayDuration, this.texts.Length - 1);
