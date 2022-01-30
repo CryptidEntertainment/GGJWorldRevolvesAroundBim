@@ -460,8 +460,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelCount: 4
   currentLevel: 0
+  worldFlipper: {fileID: 0}
   cameraPos: {x: 0, y: 0, z: 0}
   cameraSize: 0
+  canFlip: 0
 --- !u!4 &672205427
 Transform:
   m_ObjectHideFlags: 0
@@ -757,30 +759,6 @@ PrefabInstance:
     - target: {fileID: 8282085625905348649, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
       propertyPath: m_Name
       value: Screen space layers
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282085626036720374, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282085626036720374, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282085626420843128, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282085626420843128, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282085626457992079, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282085626457992079, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
