@@ -44,10 +44,11 @@ public class PlayerAudio : MonoBehaviour
 
     public void playBimFlip()
     {
-        aud.Stop();
+        /*aud.Stop();
         aud.clip = bimFlip;
         aud.loop = false;
-        aud.Play();
+        aud.Play();*/
+        aud.PlayOneShot(bimFlip);
     }
 
     public void playPickupAudio()
