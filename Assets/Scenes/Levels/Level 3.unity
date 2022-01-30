@@ -2486,6 +2486,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1508792341}
     m_Modifications:
+    - target: {fileID: 1906795648734847576, guid: bbadbf5ae5ffd204b8d5162eedbfe38f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4274364184257988548, guid: bbadbf5ae5ffd204b8d5162eedbfe38f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.65625
+      objectReference: {fileID: 0}
     - target: {fileID: 6479432727711999461, guid: bbadbf5ae5ffd204b8d5162eedbfe38f, type: 3}
       propertyPath: m_Name
       value: Math Level 3
@@ -2536,11 +2544,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6479432728428388474, guid: bbadbf5ae5ffd204b8d5162eedbfe38f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.5
+      value: 4.3
       objectReference: {fileID: 0}
     - target: {fileID: 6479432728428388475, guid: bbadbf5ae5ffd204b8d5162eedbfe38f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479432729720475303, guid: bbadbf5ae5ffd204b8d5162eedbfe38f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479432729720475305, guid: bbadbf5ae5ffd204b8d5162eedbfe38f, type: 3}
+      propertyPath: m_Text
+      value: "Hello there my bro, a small fellow goes-\napproaching up the path\r!\nand
+        if you\u2019re enthralled, and if you have the gall,\nthen you may call me
+        M A T H!"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbadbf5ae5ffd204b8d5162eedbfe38f, type: 3}
