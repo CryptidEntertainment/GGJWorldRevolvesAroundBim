@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 4872293598255443171}
   - component: {fileID: 4872293598255443168}
   m_Layer: 9
-  m_Name: Mothman
+  m_Name: Mothman Level 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
