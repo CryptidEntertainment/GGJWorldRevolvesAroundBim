@@ -578,11 +578,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1347540511 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8282085626036720328, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
-  m_PrefabInstance: {fileID: 1545709353}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1406787659 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 881192291982671326, guid: 098b4095dda4ddd4d8e40627b4d774b4, type: 3}
@@ -642,8 +637,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bim: {fileID: 0}
   FlipDuration: 0.3
-  fgRed: {fileID: 2025553964}
-  fgBlue: {fileID: 1347540511}
+  fgRed: {fileID: 0}
+  fgBlue: {fileID: 0}
+  startWithFlip: 0
 --- !u!1 &1525586225
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,11 +768,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4872293599997052834, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
   m_PrefabInstance: {fileID: 2389119050167749597}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2025553964 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8282085626457992064, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
-  m_PrefabInstance: {fileID: 1545709353}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2045850563 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 881192291982671321, guid: 098b4095dda4ddd4d8e40627b4d774b4, type: 3}
@@ -890,13 +881,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mothman
       objectReference: {fileID: 0}
+    - target: {fileID: 4872293598255443170, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
+      propertyPath: m_Size.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872293598255443170, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
+      propertyPath: m_Offset.x
+      value: -1.8
+      objectReference: {fileID: 0}
     - target: {fileID: 4872293598255443183, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4872293598255443183, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6511813
+      value: -3.28
       objectReference: {fileID: 0}
     - target: {fileID: 4872293598255443183, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
       propertyPath: m_LocalPosition.y

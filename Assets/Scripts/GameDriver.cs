@@ -44,7 +44,7 @@ public class GameDriver : MonoBehaviour {
 		worldFlipper = flpp.GetComponent<WorldPizza>();
 		//Debug.Log("Now I'm trying to put it in its own damn function because WTF.");
 		//Debug.Log("Here's what we got: " + worldFlipper);
-		canFlip = true;
+		canFlip = worldFlipper.startWithFlip;
 	}
 
 	void Awake()
@@ -59,10 +59,10 @@ public class GameDriver : MonoBehaviour {
 			GameObject.Destroy(this.gameObject);
 		}
 		canFlip = true;
-		Debug.Log("I totally did the thing! | " + canFlip);
+		//Debug.Log("I totally did the thing! | " + canFlip);
 		if (currentLevel > 0)
 		{
-			Debug.Log("Yes");
+			//Debug.Log("Yes");
 			Camera.main.transform.position = cameraPos;
 			Camera.main.orthographicSize = cameraSize;
 		}
