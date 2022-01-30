@@ -637,8 +637,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bim: {fileID: 0}
   FlipDuration: 0.3
-  fgRed: {fileID: 0}
-  fgBlue: {fileID: 0}
+  fgRed: {fileID: 1545709354}
+  fgBlue: {fileID: 1545709355}
   startWithFlip: 0
 --- !u!1 &1525586225
 GameObject:
@@ -763,6 +763,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
+--- !u!1 &1545709354 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8282085626457992064, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
+  m_PrefabInstance: {fileID: 1545709353}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1545709355 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8282085626036720328, guid: 831b0865c481ebc4bb6cff15cf25fbd8, type: 3}
+  m_PrefabInstance: {fileID: 1545709353}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1702375084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4872293599997052834, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
