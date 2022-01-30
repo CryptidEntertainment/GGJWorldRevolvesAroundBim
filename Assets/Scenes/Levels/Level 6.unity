@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1124,6 +1124,9 @@ MonoBehaviour:
   bimLand: {fileID: 8300000, guid: 5c6780ca7f3d95541a7adf9ab0f8dc12, type: 3}
   bimFlip: {fileID: 0}
   bimPickup: {fileID: 8300000, guid: 32552378a35ca9841a15c1e78860e08b, type: 3}
+  bimDeath1: {fileID: 0}
+  bimDeath2: {fileID: 0}
+  bimDeath3: {fileID: 0}
 --- !u!224 &2045850563 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 881192291982671321, guid: 098b4095dda4ddd4d8e40627b4d774b4, type: 3}
