@@ -479,3 +479,6 @@ MonoBehaviour:
   bimLand: {fileID: 8300000, guid: 5c6780ca7f3d95541a7adf9ab0f8dc12, type: 3}
   bimFlip: {fileID: 8300000, guid: 66951d9c82a310e458a954dcf8a3dbd4, type: 3}
   bimPickup: {fileID: 8300000, guid: 32552378a35ca9841a15c1e78860e08b, type: 3}
+  bimDeath1: {fileID: 8300000, guid: 5762a4dca078edb4284b4d1cdc7280a8, type: 3}
+  bimDeath2: {fileID: 8300000, guid: 7ced9ffadfc858743a2f26f1918e3cdc, type: 3}
+  bimDeath3: {fileID: 8300000, guid: 7da0e60b39b21a84fab70e153a539d65, type: 3}

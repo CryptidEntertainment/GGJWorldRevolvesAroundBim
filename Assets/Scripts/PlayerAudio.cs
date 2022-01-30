@@ -11,6 +11,9 @@ public class PlayerAudio : MonoBehaviour
     public AudioClip bimLand;
     public AudioClip bimFlip;
     public AudioClip bimPickup;
+    public AudioClip bimDeath1;
+    public AudioClip bimDeath2;
+    public AudioClip bimDeath3;
 
     // Start is called before the first frame update
     void Start()
@@ -50,5 +53,21 @@ public class PlayerAudio : MonoBehaviour
     public void playPickupAudio()
     {
         aud.PlayOneShot(bimPickup);
+    }
+
+    public void playBimDeath()
+    {
+        switch (Mathf.FloorToInt(Random.Range(1,3.999f)))
+        {
+            case 1:
+                aud.PlayOneShot(bimDeath1, 0.7f);
+                return;
+            case 2:
+                aud.PlayOneShot(bimDeath2, 0.7f);
+                return;
+            case 3:
+                aud.PlayOneShot(bimDeath3, 0.7f);
+                return;
+        }
     }
 }

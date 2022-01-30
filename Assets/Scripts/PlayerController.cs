@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
 	//Gamedriver and State
 	private GameDriver gameDriver;
 	public PlayerState state = PlayerState.Controllable;
+	private bool dieOnce = true;
 
 
 	//audio
@@ -275,6 +276,11 @@ public class PlayerController : MonoBehaviour
 	public void Die(){
 		phys.velocity = Vector2.zero;
 		phys.gravityScale = 0;
+		if (dieOnce)
+		{
+			dieOnce = false;
+			plAud.playBimDeath();
+		}
 		deathTimer = deathTime;
 		state = PlayerState.Dying;
 	}
