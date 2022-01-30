@@ -4,39 +4,49 @@ public class Cryptid : MonoBehaviour {
     public GameObject helpText;
     public GameObject[] texts;
 
-    private float textTime = 0;
-    private float textStayDuration = 3;
+    private int textIndex= 0;
+    private bool inRange = false;
 
     private void Awake() {
+        this.helpText.SetActive(false);
         foreach (GameObject text in this.texts) {
-            if (text) text.SetActive(false);
+            text.SetActive(false);
         }
     }
 
     private void Update() {
-        if (this.helpText && this.helpText.activeInHierarchy) {
-            this.textTime = Mathf.Min(this.textTime + Time.deltaTime / textStayDuration, this.texts.Length - 1);
-            this.texts[(int)Mathf.Max(0, this.textTime - 1)].SetActive(false);
-            this.texts[(int)this.textTime].SetActive(true);
+        if (Input.GetButtonDown("Interact")) {
+            if (this.inRange) {
+                if (this.helpText.activeInHierarchy) {
+                    this.texts[this.textIndex++].SetActive(false);
+                    if (this.textIndex == this.texts.Length) {
+                        this.helpText.SetActive(false);
+                    } else {
+                        this.texts[this.textIndex].SetActive(true);
+                    }
+                } else {
+                    this.helpText.SetActive(true);
+                    this.textIndex = 0;
+                    this.texts[0].SetActive(true);
+                }
+            }
         }
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.tag == "Player") {
-            if (this.helpText) this.helpText.SetActive(true);
-            this.textTime = 0;
-            foreach (GameObject text in this.texts) {
-                if (text) text.SetActive(false);
-            }
+        if (collider.gameObject.tag == "Player") {
+            this.inRange = true;
+            this.helpText.SetActive(true);
+            this.textIndex = 0;
+            this.texts[0].SetActive(true);
         }
     }
 
     void OnTriggerExit2D(Collider2D collider) {
-        if (collider.tag == "Player") {
-            if (this.helpText) this.helpText.SetActive(false);
-            foreach (GameObject text in this.texts) {
-                if (text) text.SetActive(false);
-            }
+        this.inRange = false;
+        this.helpText.SetActive(false);
+        foreach (GameObject text in this.texts) {
+            text.SetActive(false);
         }
     }
 }

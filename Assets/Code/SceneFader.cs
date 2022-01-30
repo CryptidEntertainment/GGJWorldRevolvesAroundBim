@@ -18,7 +18,6 @@ public class SceneFader : MonoBehaviour {
 	
 	private IEnumerator Fade(FadeDirection fadeDirection) {
 		float alpha = (fadeDirection == FadeDirection.Out) ? 1 : 0;
-		Debug.Log(alpha);
 		float fadeEndValue = (fadeDirection == FadeDirection.Out) ? 0 : 1;
 		if (fadeDirection == FadeDirection.Out) {
 			while (alpha >= fadeEndValue) {
