@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 	private float preJumpAnimLength = 0.0f; //set this to the linked preJumpAnimation's duration when the script starts
 	private float preJumpAnimStart = 0.0f; //will mark the start point for the timer to go off after the duration of the jump animation time
 	public AnimationClip flipAnimation = null;
-	private float flipAnimLength = 0.0f;
+	private float flipAnimLength = 0.0f; //essentially the same thing for the flip animation
 	private float flipAnimStart = 0.0f;
 	public Animator anim;
 	
@@ -43,20 +43,12 @@ public class PlayerController : MonoBehaviour
 	public PlayerState state = PlayerState.Controllable;
 
 
+	//audio
+	private PlayerAudio plAud;
 
 
 	//button buffer
 	private bool selectIsDown = false;
-
-	//animation
-	/*private Vector3 transitionStartPos;
-	private float transTimer;
-	private float lerpRate = 1f;
-	private Vector3 transitionEndPos;
-	private bool doneMoving = true;
-	private float transitionTravelDis;
-	private float scaleFactor = 1f;
-	private float deathTimer = 0f;*/
 
 	private int ignoreExit = 0;
     
@@ -72,10 +64,9 @@ public class PlayerController : MonoBehaviour
 		}
 
 		gameDriver = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameDriver> ();
-		//Debug.Log(gameDriver);
+		plAud = gameObject.GetComponent<PlayerAudio>();
 		if (preJumpAnimation) preJumpAnimLength = preJumpAnimation.length;
 		if (flipAnimation) flipAnimLength = flipAnimation.length;
-        //phys = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
 
@@ -115,17 +106,34 @@ public class PlayerController : MonoBehaviour
 				if (Input.GetAxis("Horizontal") < 0)
 				{
 					phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed, 0), ForceMode2D.Force);
-					if (canJump) anim.SetInteger("animState", 1);//walk
+					if (canJump)
+					{
+						anim.SetInteger("animState", 1);//walk
+						plAud.playBimWalk();
+					}
+					else
+                    {
+						plAud.stopPlaying();
+                    }
 				}
 				else if (Input.GetAxis("Horizontal") > 0)
 				{
 					phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed + phys.velocity.x*phys.mass*-5f, 0), ForceMode2D.Force);
-					if (canJump) anim.SetInteger("animState", 1);//walk
+					if (canJump)
+					{
+						anim.SetInteger("animState", 1);//walk
+						plAud.playBimWalk();
+					}
+					else
+					{
+						plAud.stopPlaying();
+					}
 				}
 				else if (Input.GetAxis("Horizontal")==0)
 				{
 					phys.AddForce(new Vector2(phys.velocity.x*phys.mass*-20f,0), ForceMode2D.Force);
 					anim.SetInteger("animState", 0);
+					plAud.stopPlaying();
 				}
 			}
 			else if (phys.velocity.x > 0)
@@ -133,31 +141,59 @@ public class PlayerController : MonoBehaviour
 				if (Input.GetAxis("Horizontal") < 0)
 				{
 					phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed + phys.velocity.x * phys.mass * -5f, 0), ForceMode2D.Force);
-					if (canJump) anim.SetInteger("animState", 1);//walk
+					if (canJump)
+					{
+						anim.SetInteger("animState", 1);//walk
+						plAud.playBimWalk();
+					}
+					else
+					{
+						plAud.stopPlaying();
+					}
 				}
 				else if (Input.GetAxis("Horizontal") > 0)
 				{
 					phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed, 0), ForceMode2D.Force);
-					if (canJump) anim.SetInteger("animState", 1);//walk
+					if (canJump)
+					{
+						anim.SetInteger("animState", 1);//walk
+						plAud.playBimWalk();
+					}
+					else
+					{
+						plAud.stopPlaying();
+					}
 				}
 				else if (Input.GetAxis("Horizontal") == 0)
 				{
 					phys.AddForce(new Vector2(phys.velocity.x * phys.mass * -20f, 0), ForceMode2D.Force);
 					anim.SetInteger("animState", 0);//idle
+					plAud.stopPlaying();
 				}
 			}
 			else if (phys.velocity.x == 0 && Input.GetAxis("Horizontal")!=0)
 			{
 				phys.AddForce(new Vector2(Input.GetAxis("Horizontal") * moveSpeed*20, 0), ForceMode2D.Force);
-				if (canJump) anim.SetInteger("animState", 1);//walk
+				if (canJump)
+				{
+					anim.SetInteger("animState", 1);//walk
+					plAud.playBimWalk();
+				}
+				else
+				{
+					plAud.stopPlaying();
+				}
 			}
 			else if (phys.velocity.x==0 && Input.GetAxis("Horizontal")==0)
 			{
-				if (canJump) anim.SetInteger("animState", 0);//idle
+				if (canJump)
+				{
+					anim.SetInteger("animState", 0);//idle
+					plAud.stopPlaying();
+				}
 			}
 
 			phys.velocity = Vector3.ClampMagnitude(phys.velocity, moveSpeed);
-			//phys.velocity = new Vector2(Mathf.Lerp(phys.velocity.x, Input.GetAxis("Horizontal"), accelTime) * moveSpeed, phys.velocity.y);
 			
 
 			//Now for the jumping part of the code!
@@ -167,24 +203,17 @@ public class PlayerController : MonoBehaviour
 				{
 					if (preJump == false)
 					{
+						plAud.stopPlaying();
 						preJump = true;
 						preJumpAnimStart = Time.time+Time.deltaTime;
 						jumpCD = 30;
-						//Debug.Log("Jump Pressed, jumping prep");
 						anim.SetInteger("animState", 2);//jump
-						//Debug.Log("Anim State: " + anim.GetInteger("animState"));
-						//Debug.Log(preJumpAnimStart);
-						//Do the prejump animation
-					}
-					else
-                    {
-						//phys.AddForce(Vector2.up * jumpCD); //This is how to do the jump force, need to find a place to put it - or an alternate way??
 					}
 				}
 			}
 			if (preJump == true)
 			{
-				//need to mess with prejump stuff
+				//this does all the prejump stuff to play the animation before leaving the ground.
 				if (Time.time >= preJumpAnimStart + preJumpAnimLength)
 				{
 					preJump = false;
@@ -192,10 +221,6 @@ public class PlayerController : MonoBehaviour
 					anim.SetInteger("animState", 3);//in-air
 					phys.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
 				}
-                else
-                {
-					//Debug.Log("Time: " +Time.time + " | preJumpAnimStart: " + preJumpAnimStart + " | preJumpAnimLength: " + preJumpAnimLength);
-                }
 
 			}
 			else if (Input.GetAxis("Vertical") <= 0)
@@ -206,9 +231,6 @@ public class PlayerController : MonoBehaviour
 		if(phys.velocity.y<0)
 		{
 			phys.AddForce(new Vector2(0, -18f * phys.mass));
-			//Debug.Log("Falling, trigger falling anim");
-			//anim.SetInteger("animState", 4);//no change in this case, stays in the in-air animation
-			//Do the falling animation
 		}
 		if (Input.GetAxis("Flip") != 0 && gameDriver.flip == true)
 		{
@@ -216,10 +238,16 @@ public class PlayerController : MonoBehaviour
 			Debug.Log("Should Flip");
 			flipAnimStart = Time.time + Time.deltaTime;
 			anim.SetInteger("animState", 5);
+			plAud.playBimFlip();
 			phys.gravityScale = 0;
 			state = PlayerState.Flipping;
-			
 			GetComponent<Collider2D>().enabled = false;
+			GetComponent<Rigidbody2D>().simulated = false;
+			foreach(Collider2D coll in this.gameObject.GetComponentsInChildren<Collider2D>())
+            {
+				coll.enabled = false;
+            }
+			gameDriver.doFlip();
 		}
 		if (phys.velocity.x > 0) GetComponent<SpriteRenderer>().flipX = false;
 		if (phys.velocity.x < 0) GetComponent<SpriteRenderer>().flipX = true;
@@ -231,55 +259,18 @@ public class PlayerController : MonoBehaviour
 			//Debug.Log("Currently flipping. | " + anim.GetInteger("animState"));
 			if (Time.time >= flipAnimStart + flipAnimLength)
 			{
-				gameDriver.flip = false;
 				state = PlayerState.Controllable;
 				phys.gravityScale = 1.0f;
 				GetComponent<Collider2D>().enabled = true;
+				GetComponent<Rigidbody2D>().simulated = true;
+				foreach (Collider2D coll in this.gameObject.GetComponentsInChildren<Collider2D>())
+				{
+					coll.enabled = true;
+				}
 			}
 			if(doubleJumpOnFlip)canJump = true;
 		}
 	}
-
-	/*public void SetSwitch(EmiterSwitch targetSwitch){
-		Debug.Log ("Over switch");
-		overSwitch = true;
-        
-		eSwitch = targetSwitch;
-	}*/
-
-	/*public void LeaveSwitch(){
-		Debug.Log ("Leaveswitch");
-		overSwitch = false;
-		eSwitch = null;
-	}*/
-
-	/*public void SetInSignal(bool isIn){
-		if (inWifiRange && isIn) {
-			ignoreExit++;
-		} else {
-			inWifiRange = isIn;
-			if (!inTransitionRange) {
-				if (isIn) {
-					this.gameObject.GetComponent<SpriteRenderer> ().color = Color.cyan;
-                    GetComponent<Rigidbody2D>().gravityScale = 0.1f;
-                } else {
-					this.gameObject.GetComponent<SpriteRenderer> ().color = Color.white;
-                    GetComponent<Rigidbody2D>().gravityScale = 1;
-                }
-			}
-		}
-	}*/
-
-	/*public void SetInTransitionRange(bool isIn, TransitionDish targetDish){
-		inTransitionRange = isIn;
-		if (isIn) {
-			dish = targetDish;
-		} else if (inWifiRange) {
-			this.gameObject.GetComponent<SpriteRenderer> ().color = Color.cyan;
-		} else {
-			this.gameObject.GetComponent<SpriteRenderer> ().color = Color.white;
-		}
-	}*/
 
 	public void Die(){
 		phys.velocity = Vector2.zero;
@@ -294,6 +285,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	//presently unused trigger that could be used for something or other.
 	void OnTriggerExit2D(Collider2D other){
 		/*if (other.gameObject.tag == "Signal") {
 			Debug.Log ("Exited Signal");
@@ -309,6 +301,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 
+	//we've hit the something. Make sure it's the ground and that we're above it so we can jump again.
     private void OnCollisionEnter2D(Collision2D collision)
 
     {
@@ -320,30 +313,24 @@ public class PlayerController : MonoBehaviour
             {
                 if(point.point.y<(transform.position.y-GetComponent<SpriteRenderer>().bounds.extents.y*0.5f))
                 {
-                    //Debug.Log("The point: " + point.point + " Is below: " + (transform.position.y - GetComponent<SpriteRenderer>().bounds.extents.y * 0.9f));
-					isAbove = true;
+                    isAbove = true;
                     canJump = true;
+					plAud.playBimLand();
 					anim.SetInteger("animState", 4);//land
-                    //phys.velocity = Vector2.zero;
-                    //anim.SetInteger("animState", 0);
-                    //jumpCD = 0;
+
                 }
             }
-            //canJump = true;
-            //jumpCD = 0;
-            //Do the landing animation
         }
     }
 
+	//we've left the ground somehow, make sure we know we're up in the air now.
     private void OnCollisionExit2D(Collision2D collision)
     {
-        //Debug.Log("Collision Exit");
         if (!GetComponent<CapsuleCollider2D>().IsTouchingLayers(64))//bit check specifically for unity physics layer 6
         {
-            //Debug.Log("Not touching ground, can't jump.");
             canJump = false;
 			anim.SetInteger("animState", 3);//in-air
-            //anim.SetInteger("animState", 4);//descend
+			plAud.stopPlaying();
         }
     }
 }

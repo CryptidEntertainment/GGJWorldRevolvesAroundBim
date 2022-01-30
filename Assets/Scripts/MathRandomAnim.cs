@@ -16,7 +16,7 @@ public class MathRandomAnim : MonoBehaviour
         timer = Time.time;
     }
 
-    // Update is called once per frame
+    //take a random number, and go to the next animation frame based on that.
     void Update()
     {
         

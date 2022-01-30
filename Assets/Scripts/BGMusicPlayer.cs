@@ -9,8 +9,8 @@ public class BGMusicPlayer : MonoBehaviour
 
     void Start()
     {
-        //introBG.Play();
-        loopBG.PlayDelayed(introBG.clip.length*0.995f);
+        //introBG.Play(); //intro autoplays, no need to call it.
+        loopBG.PlayDelayed(introBG.clip.length*0.995f); //play the looping audio, with the tiniest bit of overlap to try and make up for Unity not actually preloading the audio so it starts exactly when it's supposed to.
     }
 
 }
