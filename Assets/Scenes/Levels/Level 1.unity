@@ -639,6 +639,7 @@ MonoBehaviour:
   FlipDuration: 0.3
   fgRed: {fileID: 0}
   fgBlue: {fileID: 0}
+  startWithFlip: 0
 --- !u!1 &1525586225
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,13 +881,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mothman
       objectReference: {fileID: 0}
+    - target: {fileID: 4872293598255443170, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
+      propertyPath: m_Size.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872293598255443170, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
+      propertyPath: m_Offset.x
+      value: -1.8
+      objectReference: {fileID: 0}
     - target: {fileID: 4872293598255443183, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4872293598255443183, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6511813
+      value: -3.28
       objectReference: {fileID: 0}
     - target: {fileID: 4872293598255443183, guid: faf37ab0023cb1048a03f6cd6424a476, type: 3}
       propertyPath: m_LocalPosition.y
