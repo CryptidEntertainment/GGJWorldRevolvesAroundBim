@@ -1329,10 +1329,10 @@ TextMesh:
     nothing beside remains.
     round the rates of change
 
-    of that polygonal surface, bounded and bare,
+    of that continuous surface, bounded and bare,
 
     the
-    lone and level triangles stretch far away!'
+    many and infinitesimal slices stretch far away!'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1.5
@@ -1571,7 +1571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7276053977782005963
 Transform:
   m_ObjectHideFlags: 0
