@@ -14,6 +14,7 @@ public class WorldPizza : MonoBehaviour {
     private float flipTime = 0;
     private bool isFlipping = false;
     private GameDriver gameDriver;
+    public bool startWithFlip = true;
     void Start() {
         gameDriver = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameDriver>();
         gameDriver.connectWorldFlipper(this.gameObject);//attempt to give this object over to the driver to actually use it.
