@@ -86,7 +86,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
 --- !u!1 &777070162178822289
 GameObject:
@@ -174,7 +174,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
 --- !u!1 &5087358078133991854
 GameObject:
@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 5087358078133991855}
   - component: {fileID: 5087358077854766241}
   - component: {fileID: 2052367807}
+  - component: {fileID: 2052367809}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -376,7 +377,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -461,3 +462,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2052367809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5087358078133991854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417e1add4b47f93469133227dc3d1c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aud: {fileID: 2052367807}
+  bimWalk: {fileID: 8300000, guid: 2764c3cc2baec2a448f48b376d3e2ba8, type: 3}
+  bimLand: {fileID: 8300000, guid: 5c6780ca7f3d95541a7adf9ab0f8dc12, type: 3}
+  bimFlip: {fileID: 8300000, guid: 66951d9c82a310e458a954dcf8a3dbd4, type: 3}
+  bimPickup: {fileID: 8300000, guid: 32552378a35ca9841a15c1e78860e08b, type: 3}
