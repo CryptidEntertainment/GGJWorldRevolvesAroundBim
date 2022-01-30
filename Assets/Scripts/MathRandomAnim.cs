@@ -46,7 +46,7 @@ public class MathRandomAnim : MonoBehaviour
             }
             else if (rndInt <= 10000)
             {
-                delay = rate*100;
+                delay = rate*500;
                 anim.SetInteger("randAnim", 5);
             }
         }
